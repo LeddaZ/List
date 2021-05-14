@@ -1,6 +1,5 @@
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.*;
+import java.util.*;
 
 /**
  * Creates an alphabetically ordered list.
@@ -25,21 +24,31 @@ public class List {
     }
 
     /**
+     * Copy constructor. Duplicates a list.
+     * @param otherList the list to duplicate
+     */
+    public List(List otherList) {
+        this.name = otherList.name;
+        this.filename = otherList.filename;
+        this.items = otherList.items;
+    }
+
+    /**
      * Adds an item to the list and sorts the list alphabetically to reorder
      * the items.
      * @param itemName the name of the item
      */
-    public void addItem(String itemName) {
-        items.add(itemName);
-        sort();
+    public void add(String itemName) {
+        this.items.add(itemName);
+        this.sort();
     }
 
     /**
      * Removes an item from the list.
      * @param pos the item's position (1..n)
      */
-    public void removeItem(int pos) {
-        items.remove(pos - 1);
+    public void remove(int pos) {
+        this.items.remove(pos - 1);
     }
 
     /**
@@ -48,20 +57,34 @@ public class List {
      * contents.
      * @throws IOException throws an exception if the file is not found
      */
-    public void saveList() throws IOException {
-        FileWriter f = new FileWriter(this.filename, true);
-        for (String item : items)
-            f.write(item+"\n");
-        f.close();
+    public void save() throws IOException {
+        FileWriter fw = new FileWriter(this.filename, true);
+        for (String item : this.items)
+            fw.write(item+"\n");
+        fw.close();
+    }
+
+    /**
+     * Saves the list to the specified absolute file path (must be an existing file).
+     * If the file already exists, the list will be appended to the existing
+     * contents.
+     * @param filePath the absolute file path
+     * @throws IOException throws an exception if the file is not found
+     */
+    public void saveAs(String filePath) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true);
+        for (String item : this.items)
+            fw.write(item+"\n");
+        fw.close();
     }
 
     /**
      * Clears the list, including the text file.
      * @throws IOException throws an exception if the file is not found
      */
-    public void clearList() throws IOException {
+    public void clear() throws IOException {
         for(int i = 0; i < this.items.size(); i++) {
-            removeItem(i+1);
+            this.remove(i+1);
         }
         FileWriter f = new FileWriter(this.filename);
         f.flush();
@@ -69,18 +92,31 @@ public class List {
     }
 
     /**
-     * Displays all items in the list in one line.
+     * Reads a text file line by line and imports it into a list.
+     * @param filePath the absolute file path
+     * @throws FileNotFoundException throws an exception if the file is not found
      */
-    public void displayCompactList() {
-        System.out.println(items.toString());
+    public void importFile(String filePath) throws FileNotFoundException {
+        Scanner scanner = new Scanner(new File(filePath));
+        while (scanner.hasNextLine()) {
+            this.add(scanner.nextLine());
+        }
+        scanner.close();
     }
 
     /**
-     * Displays all items in the list, one per line.
+     * Displays all items in the list in one line.
      */
-    public void displayList() {
-        for(int i = 0; i < items.size(); i++) {
-            System.out.println(i+1 + ". " + items.get(i));
+    public void displayCompact() {
+        System.out.println(this.items.toString());
+    }
+
+    /**
+     * Displays all items in the list one per line.
+     */
+    public void display() {
+        for(int i = 0; i < this.items.size(); i++) {
+            System.out.println(i+1 + ". " + this.items.get(i));
         }
     }
 
@@ -93,7 +129,7 @@ public class List {
     }
 
     private void sort() {
-        items.sort(String.CASE_INSENSITIVE_ORDER);
+        this.items.sort(String.CASE_INSENSITIVE_ORDER);
     }
 
 }
