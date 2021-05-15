@@ -59,8 +59,9 @@ public class List {
      */
     public void save() throws IOException {
         FileWriter fw = new FileWriter(this.filename, true);
+        fw.write(this.name + "\n");
         for (String item : this.items)
-            fw.write(item+"\n");
+            fw.write(item + "\n");
         fw.close();
     }
 
@@ -73,8 +74,9 @@ public class List {
      */
     public void saveAs(String filePath) throws IOException {
         FileWriter fw = new FileWriter(filePath, true);
+        fw.write(this.name + "\n");
         for (String item : this.items)
-            fw.write(item+"\n");
+            fw.write(item + "\n");
         fw.close();
     }
 
