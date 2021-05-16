@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Creates an alphabetically ordered list.
+ * Creates a list.
  * @author LeddaZ
  */
 public class List {
@@ -12,17 +12,21 @@ public class List {
     private String filename;
     private ArrayList<String> items;
     private int saveCount;
+    private boolean isOrdered;
 
     /**
      * Constructor method. Initializes a new list with a name and a filename
      * (list name followed by .txt).
      * @param listName the list's name
+     * @param isOrdered specifies if the list will be alphabetically ordered or
+     *                  not.
      */
-    public List(String listName) {
+    public List(String listName, boolean isOrdered) {
         this.name = listName;
         this.filename = listName + ".txt";
         this.items = new ArrayList<String>();
         this.saveCount = 0;
+        this.isOrdered = isOrdered;
     }
 
     /**
@@ -34,16 +38,18 @@ public class List {
         this.filename = otherList.filename;
         this.items = otherList.items;
         this.saveCount = 0;
+        this.isOrdered = otherList.isOrdered;
     }
 
     /**
-     * Adds an item to the list and sorts the list alphabetically to reorder
-     * the items.
+     * Adds an item to the list and, if necessary, sorts the list alphabetically
+     * to reorder the items.
      * @param itemName the name of the item
      */
     public void add(String itemName) {
         this.items.add(itemName);
-        this.sort();
+        if(this.isOrdered)
+            this.sort();
     }
 
     /**
