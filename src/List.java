@@ -11,6 +11,7 @@ public class List {
     private String name;
     private String filename;
     private ArrayList<String> items;
+    private int saveCount;
 
     /**
      * Constructor method. Initializes a new list with a name and a filename
@@ -21,6 +22,7 @@ public class List {
         this.name = listName;
         this.filename = listName + ".txt";
         this.items = new ArrayList<String>();
+        this.saveCount = 0;
     }
 
     /**
@@ -28,9 +30,10 @@ public class List {
      * @param otherList the list to duplicate
      */
     public List(List otherList) {
-        this.name = otherList.name;
+        this.name = otherList.getName();
         this.filename = otherList.filename;
         this.items = otherList.items;
+        this.saveCount = 0;
     }
 
     /**
@@ -54,15 +57,18 @@ public class List {
     /**
      * Saves the list to a text file with the name specified in the constructor.
      * If the file already exists, the list will be appended to the existing
-     * contents.
+     * contents. The list's title will also be saved if the list is being saved
+     * for the first time.
      * @throws IOException throws an exception if the file is not found
      */
     public void save() throws IOException {
         FileWriter fw = new FileWriter(this.filename, true);
-        fw.write(this.name + "\n");
+        if(this.saveCount == 0)
+            fw.write(this.getName() + "\n");
         for (String item : this.items)
             fw.write(item + "\n");
         fw.close();
+        this.saveCount++;
     }
 
     /**
@@ -74,7 +80,7 @@ public class List {
      */
     public void saveAs(String filePath) throws IOException {
         FileWriter fw = new FileWriter(filePath, true);
-        fw.write(this.name + "\n");
+        fw.write(this.getName() + "\n");
         for (String item : this.items)
             fw.write(item + "\n");
         fw.close();
@@ -91,6 +97,7 @@ public class List {
         FileWriter f = new FileWriter(this.filename);
         f.flush();
         f.close();
+        this.saveCount = 0;
     }
 
     /**
@@ -110,13 +117,14 @@ public class List {
      * Displays all items in the list in one line.
      */
     public void displayCompact() {
-        System.out.println(this.items.toString());
+        System.out.println(this.getName() + ": " + this.items.toString());
     }
 
     /**
      * Displays all items in the list one per line.
      */
     public void display() {
+        System.out.println(this.getName());
         for(int i = 0; i < this.items.size(); i++) {
             System.out.println(i+1 + ". " + this.items.get(i));
         }
