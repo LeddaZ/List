@@ -1,3 +1,5 @@
+package List;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -7,42 +9,28 @@ import java.util.Scanner;
 
 /**
  * Creates a list.
- * @author LeddaZ
+ * @author Leonardo Ledda (LeddaZ)
  */
 public class List {
 
     // Environment variables
-    private final String name;
-    private final String filename;
+    private String name;
+    private String filename;
     private ArrayList<String> items;
     private int saveCount;
-    private final boolean isOrdered;
+    private boolean nameChanged;
 
     /**
      * Constructor method. Initializes a new list with a name and a filename
      * (list name followed by .txt).
      * @param listName The list's name
-     * @param isOrdered Specifies if the list will be alphabetically ordered or
-     *                  not.
      */
-    public List(String listName, boolean isOrdered) {
+    public List(String listName) {
         this.name = listName;
         this.filename = listName + ".txt";
         this.items = new ArrayList<>();
         this.saveCount = 0;
-        this.isOrdered = isOrdered;
-    }
-
-    /**
-     * Copy constructor. Duplicates a list.
-     * @param otherList The list to duplicate
-     */
-    public List(List otherList) {
-        this.name = otherList.getName();
-        this.filename = otherList.filename;
-        this.items = otherList.items;
-        this.saveCount = 0;
-        this.isOrdered = otherList.isOrdered;
+        this.nameChanged = false;
     }
 
     /**
@@ -52,8 +40,6 @@ public class List {
      */
     public void add(String itemName) {
         this.items.add(itemName);
-        if(this.isOrdered)
-            this.sort();
     }
 
     /**
@@ -73,8 +59,11 @@ public class List {
      */
     public void save() throws IOException {
         FileWriter fw = new FileWriter(this.filename, true);
-        if(this.saveCount == 0)
-            fw.write(this.getName() + "\n");
+        if((this.saveCount == 0 || this.nameChanged)) {
+            fw.write(this.getName() + "\n", 0, this.getName().length());
+            if(this.nameChanged)
+                this.nameChanged = false;
+        }
         for (String item : this.items)
             fw.write(item + "\n");
         fw.close();
@@ -148,8 +137,45 @@ public class List {
         return this.name;
     }
 
-    private void sort() {
-        this.items.sort(String.CASE_INSENSITIVE_ORDER);
+    /**
+     * Sets a new name for the list
+     * @param newName The new name
+     */
+    public void setName(String newName) {
+        this.name = newName;
+        this.nameChanged = true;
+    }
+
+    /**
+     * Returns the list's filename
+     * @return The list's filename
+     */
+    public String getFilename() {
+        return this.filename;
+    }
+
+    /**
+     * Sets a new filename for the list
+     * @param newFilename The new filename
+     */
+    public void setFilename(String newFilename) {
+        this.filename = newFilename;
+    }
+
+    /**
+     * Returns all items currently in the list.
+     * @return List of items
+     */
+    public ArrayList<String> getItems() {
+        return this.items;
+    }
+
+    /**
+     * Returns how many times the list has been saved.
+     * @return The list's save count
+     */
+    public int getSaveCount() {
+        return this.saveCount;
     }
 
 }
