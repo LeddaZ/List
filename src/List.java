@@ -21,8 +21,8 @@ public class List {
     /**
      * Constructor method. Initializes a new list with a name and a filename
      * (list name followed by .txt).
-     * @param listName the list's name
-     * @param isOrdered specifies if the list will be alphabetically ordered or
+     * @param listName The list's name
+     * @param isOrdered Specifies if the list will be alphabetically ordered or
      *                  not.
      */
     public List(String listName, boolean isOrdered) {
@@ -35,7 +35,7 @@ public class List {
 
     /**
      * Copy constructor. Duplicates a list.
-     * @param otherList the list to duplicate
+     * @param otherList The list to duplicate
      */
     public List(List otherList) {
         this.name = otherList.getName();
@@ -48,7 +48,7 @@ public class List {
     /**
      * Adds an item to the list and, if necessary, sorts the list alphabetically
      * to reorder the items.
-     * @param itemName the name of the item
+     * @param itemName The name of the item
      */
     public void add(String itemName) {
         this.items.add(itemName);
@@ -58,7 +58,7 @@ public class List {
 
     /**
      * Removes an item from the list.
-     * @param pos the item's position (1..n)
+     * @param pos The item's position (1...n)
      */
     public void remove(int pos) {
         this.items.remove(pos - 1);
@@ -69,7 +69,7 @@ public class List {
      * If the file already exists, the list will be appended to the existing
      * contents. The list's title will also be saved if the list is being saved
      * for the first time.
-     * @throws IOException throws an exception if the file is not found
+     * @throws IOException Throws an exception if the file is not found
      */
     public void save() throws IOException {
         FileWriter fw = new FileWriter(this.filename, true);
@@ -85,8 +85,8 @@ public class List {
      * Saves the list to the specified absolute file path (must be an existing file).
      * If the file already exists, the list will be appended to the existing
      * contents.
-     * @param filePath the absolute file path
-     * @throws IOException throws an exception if the file is not found
+     * @param filePath The absolute file path
+     * @throws IOException Throws an exception if the file is not found
      */
     public void saveAs(String filePath) throws IOException {
         FileWriter fw = new FileWriter(filePath, true);
@@ -98,7 +98,7 @@ public class List {
 
     /**
      * Clears the list, including the text file.
-     * @throws IOException throws an exception if the file is not found
+     * @throws IOException Throws an exception if the file is not found
      */
     public void clear() throws IOException {
         for(int i = 0; i < this.items.size(); i++) {
@@ -112,8 +112,8 @@ public class List {
 
     /**
      * Reads a text file line by line and imports it into a list.
-     * @param filePath the absolute file path
-     * @throws FileNotFoundException throws an exception if the file is not found
+     * @param filePath The absolute file path
+     * @throws FileNotFoundException Throws an exception if the file is not found
      */
     public void importFile(String filePath) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(filePath));
@@ -142,7 +142,7 @@ public class List {
 
     /**
      * Returns the list's name
-     * @return the list's name
+     * @return The list's name
      */
     public String getName() {
         return this.name;
