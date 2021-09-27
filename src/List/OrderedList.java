@@ -1,5 +1,9 @@
 package List;
 
+/**
+ * Creates an alphabetically ordered list.
+ * @author Leonardo Ledda (LeddaZ)
+ */
 public class OrderedList extends List {
 
     /**
