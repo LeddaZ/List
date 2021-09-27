@@ -12,11 +12,11 @@ import java.util.Scanner;
 public class List {
 
     // Environment variables
-    private String name;
-    private String filename;
+    private final String name;
+    private final String filename;
     private ArrayList<String> items;
     private int saveCount;
-    private boolean isOrdered;
+    private final boolean isOrdered;
 
     /**
      * Constructor method. Initializes a new list with a name and a filename
@@ -28,7 +28,7 @@ public class List {
     public List(String listName, boolean isOrdered) {
         this.name = listName;
         this.filename = listName + ".txt";
-        this.items = new ArrayList<String>();
+        this.items = new ArrayList<>();
         this.saveCount = 0;
         this.isOrdered = isOrdered;
     }
